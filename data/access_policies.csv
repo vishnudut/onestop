@@ -1,0 +1,16 @@
+policy_id,resource_type,resource_name,required_role,requires_approval,approver_role,auto_approve_conditions,description
+POL-001,database,production_db,Senior SDE,true,Engineering Manager,none,Production database read access
+POL-002,database,staging_db,SDE,false,none,onboarding_complete=true,Staging database full access
+POL-003,api_key,openai,SDE,true,Tech Lead,project_approved=true,OpenAI API key for approved projects
+POL-004,network,vpn_whitelist,SDE,false,none,security_training_complete=true,VPN IP whitelisting
+POL-005,tool,pagerduty,Senior SDE,true,Engineering Manager,on_call_rotation=true,PagerDuty on-call access
+POL-006,cloud,aws_dev,SDE,false,none,team=Backend|Platform|Infrastructure,AWS dev account access
+POL-007,monitoring,production_logs,Staff SDE,true,Engineering Manager,none,Production log access
+POL-008,cicd,deploy_staging,SDE,false,none,pr_approved=true,Deploy to staging environment
+POL-009,cicd,deploy_production,Senior SDE,true,Engineering Manager,tests_passing=true,Deploy to production
+POL-010,github,backend_team_org,SDE,true,Engineering Manager,team=Backend,GitHub org access
+POL-011,api_key,stripe,SDE,false,none,environment=test,Stripe test API keys
+POL-012,api_key,aws,Senior SDE,true,DevOps Manager,none,AWS production API keys
+POL-013,database,analytics_db,SDE,false,none,team=Data|Analytics,Analytics database access
+POL-014,tool,datadog,SDE,false,none,team=Backend|Platform|Infrastructure,Datadog monitoring access
+POL-015,license,intellij,SDE,false,none,onboarding_complete=true,IntelliJ IDEA license

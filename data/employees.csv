@@ -1,0 +1,21 @@
+employee_id,name,email,department,role,team,manager_email,hire_date,onboarding_complete,security_training_complete
+E001,Alice Johnson,alice@company.com,Engineering,Senior SDE,Backend,bob@company.com,2022-03-15,true,true
+E002,Bob Smith,bob@company.com,Engineering,Engineering Manager,Backend,cto@company.com,2020-01-10,true,true
+E003,Charlie Davis,charlie@company.com,Engineering,SDE,Frontend,sarah@company.com,2023-06-01,true,false
+E004,Diana Prince,diana@company.com,Engineering,Staff SDE,Platform,bob@company.com,2021-09-12,true,true
+E005,Eve Chen,eve@company.com,Engineering,SDE Intern,Mobile,sarah@company.com,2024-01-05,false,false
+E006,Frank Miller,frank@company.com,Engineering,Senior SDE,Backend,bob@company.com,2022-08-20,true,true
+E007,Grace Lee,grace@company.com,Engineering,Tech Lead,Frontend,sarah@company.com,2021-03-10,true,true
+E008,Henry Wong,henry@company.com,Engineering,SDE,Platform,bob@company.com,2023-11-15,true,true
+E009,Sarah Connor,sarah@company.com,Engineering,Engineering Manager,Frontend,cto@company.com,2019-05-22,true,true
+E010,Ivan Petrov,ivan@company.com,Engineering,Senior SDE,Mobile,sarah@company.com,2022-12-01,true,true
+E011,Julia Martinez,julia@company.com,Engineering,SDE,Backend,bob@company.com,2024-02-14,true,true
+E012,Kevin Park,kevin@company.com,Engineering,Staff SDE,Security,bob@company.com,2020-07-08,true,true
+E013,Lisa Anderson,lisa@company.com,DevOps,DevOps Engineer,Infrastructure,mike@company.com,2021-11-30,true,true
+E014,Mike Chen,mike@company.com,DevOps,DevOps Manager,Infrastructure,cto@company.com,2019-02-14,true,true
+E015,Nina Patel,nina@company.com,DevOps,SRE,Infrastructure,mike@company.com,2023-04-18,true,true
+E016,Oscar Rodriguez,oscar@company.com,Data,Data Engineer,Analytics,emily@company.com,2022-09-05,true,true
+E017,Emily Taylor,emily@company.com,Data,Data Team Lead,Analytics,cto@company.com,2020-11-20,true,true
+E018,Paul White,paul@company.com,Data,Senior Data Scientist,Analytics,emily@company.com,2021-06-15,true,true
+E019,Quinn Hughes,quinn@company.com,Engineering,SDE,Backend,bob@company.com,2024-03-01,true,false
+E020,Rachel Green,rachel@company.com,Engineering,SDE,Frontend,sarah@company.com,2023-09-10,true,true

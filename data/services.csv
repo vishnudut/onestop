@@ -1,0 +1,11 @@
+service_name,description,owner_email,team,repository,docs_url,on_call_group,status
+user-service,User authentication and management,alice@company.com,Backend,github.com/company/user-service,docs.company.com/user-service,backend-oncall,healthy
+payment-service,Payment processing,frank@company.com,Backend,github.com/company/payment,docs.company.com/payment,backend-oncall,healthy
+frontend-web,Main web application,grace@company.com,Frontend,github.com/company/web-app,docs.company.com/frontend,frontend-oncall,degraded
+analytics-pipeline,Data analytics ETL,oscar@company.com,Data,github.com/company/analytics,docs.company.com/analytics,data-oncall,healthy
+mobile-app,iOS and Android apps,ivan@company.com,Mobile,github.com/company/mobile,docs.company.com/mobile,mobile-oncall,healthy
+api-gateway,API Gateway and routing,diana@company.com,Platform,github.com/company/api-gateway,docs.company.com/api-gateway,platform-oncall,healthy
+notification-service,Email and SMS notifications,frank@company.com,Backend,github.com/company/notifications,docs.company.com/notifications,backend-oncall,healthy
+search-service,Product search and indexing,alice@company.com,Backend,github.com/company/search,docs.company.com/search,backend-oncall,healthy
+recommendation-engine,ML-based recommendations,paul@company.com,Data,github.com/company/recommendations,docs.company.com/recommendations,data-oncall,healthy
+infrastructure,Core infrastructure and monitoring,lisa@company.com,Infrastructure,github.com/company/infrastructure,docs.company.com/infrastructure,infra-oncall,healthy

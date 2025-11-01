@@ -1,0 +1,60 @@
+user_email,training_id,training_name,completed,completed_date,expires_at,certificate_url
+alice@company.com,security_training,Security Training,true,2022-04-15,2025-04-15,https://certs.company.com/alice-security-2022
+alice@company.com,data_privacy_training,Data Privacy Fundamentals,true,2022-05-20,2025-05-20,https://certs.company.com/alice-privacy-2022
+alice@company.com,git_training,Git Best Practices,true,2022-03-20,null,https://certs.company.com/alice-git-2022
+alice@company.com,code_review_training,Code Review Guidelines,true,2022-03-25,null,https://certs.company.com/alice-codereview-2022
+alice@company.com,ai_ethics_training,AI Ethics and Responsible Use,true,2023-08-10,null,https://certs.company.com/alice-ai-ethics-2023
+bob@company.com,security_training,Security Training,true,2020-02-15,2025-02-15,https://certs.company.com/bob-security-2020
+bob@company.com,data_privacy_training,Data Privacy Fundamentals,true,2020-03-10,2025-03-10,https://certs.company.com/bob-privacy-2020
+bob@company.com,git_training,Git Best Practices,true,2020-01-20,null,https://certs.company.com/bob-git-2020
+bob@company.com,oncall_training,On-Call Best Practices,true,2020-06-15,null,https://certs.company.com/bob-oncall-2020
+charlie@company.com,security_training,Security Training,false,null,null,null
+charlie@company.com,git_training,Git Best Practices,true,2023-06-10,null,https://certs.company.com/charlie-git-2023
+charlie@company.com,code_review_training,Code Review Guidelines,false,null,null,null
+diana@company.com,security_training,Security Training,true,2021-10-01,2024-10-01,https://certs.company.com/diana-security-2021
+diana@company.com,data_privacy_training,Data Privacy Fundamentals,true,2021-10-15,2024-10-15,https://certs.company.com/diana-privacy-2021
+diana@company.com,cloud_security_training,Cloud Security Fundamentals,true,2022-01-20,2025-01-20,https://certs.company.com/diana-cloud-2022
+diana@company.com,production_access_training,Production Access Certification,true,2022-02-10,2025-02-10,https://certs.company.com/diana-prod-2022
+eve@company.com,security_training,Security Training,false,null,null,null
+eve@company.com,git_training,Git Best Practices,false,null,null,null
+frank@company.com,security_training,Security Training,true,2022-09-01,2025-09-01,https://certs.company.com/frank-security-2022
+frank@company.com,data_privacy_training,Data Privacy Fundamentals,true,2022-09-15,2025-09-15,https://certs.company.com/frank-privacy-2022
+frank@company.com,git_training,Git Best Practices,true,2022-08-25,null,https://certs.company.com/frank-git-2022
+grace@company.com,security_training,Security Training,true,2021-04-01,2024-04-01,https://certs.company.com/grace-security-2021
+grace@company.com,git_training,Git Best Practices,true,2021-03-15,null,https://certs.company.com/grace-git-2021
+grace@company.com,code_review_training,Code Review Guidelines,true,2021-03-20,null,https://certs.company.com/grace-codereview-2021
+grace@company.com,ai_ethics_training,AI Ethics and Responsible Use,true,2023-09-05,null,https://certs.company.com/grace-ai-ethics-2023
+henry@company.com,security_training,Security Training,true,2023-12-01,2026-12-01,https://certs.company.com/henry-security-2023
+henry@company.com,cloud_security_training,Cloud Security Fundamentals,true,2024-01-15,2027-01-15,https://certs.company.com/henry-cloud-2024
+sarah@company.com,security_training,Security Training,true,2019-06-01,2024-06-01,https://certs.company.com/sarah-security-2019
+sarah@company.com,data_privacy_training,Data Privacy Fundamentals,true,2019-06-15,2024-06-15,https://certs.company.com/sarah-privacy-2019
+sarah@company.com,git_training,Git Best Practices,true,2019-05-25,null,https://certs.company.com/sarah-git-2019
+sarah@company.com,code_review_training,Code Review Guidelines,true,2019-06-10,null,https://certs.company.com/sarah-codereview-2019
+sarah@company.com,oncall_training,On-Call Best Practices,true,2020-01-10,null,https://certs.company.com/sarah-oncall-2020
+ivan@company.com,security_training,Security Training,true,2023-01-01,2026-01-01,https://certs.company.com/ivan-security-2023
+ivan@company.com,git_training,Git Best Practices,true,2022-12-10,null,https://certs.company.com/ivan-git-2022
+julia@company.com,security_training,Security Training,true,2024-03-01,2027-03-01,https://certs.company.com/julia-security-2024
+julia@company.com,git_training,Git Best Practices,true,2024-02-20,null,https://certs.company.com/julia-git-2024
+kevin@company.com,security_training,Security Training,true,2020-08-01,2025-08-01,https://certs.company.com/kevin-security-2020
+kevin@company.com,data_privacy_training,Data Privacy Fundamentals,true,2020-08-15,2025-08-15,https://certs.company.com/kevin-privacy-2020
+kevin@company.com,cloud_security_training,Cloud Security Fundamentals,true,2021-01-10,2024-01-10,https://certs.company.com/kevin-cloud-2021
+lisa@company.com,security_training,Security Training,true,2021-12-15,2024-12-15,https://certs.company.com/lisa-security-2021
+lisa@company.com,cloud_security_training,Cloud Security Fundamentals,true,2022-02-01,2025-02-01,https://certs.company.com/lisa-cloud-2022
+lisa@company.com,monitoring_training,Monitoring and Alerting Best Practices,true,2022-01-20,null,https://certs.company.com/lisa-monitoring-2022
+mike@company.com,security_training,Security Training,true,2019-03-01,2024-03-01,https://certs.company.com/mike-security-2019
+mike@company.com,cloud_security_training,Cloud Security Fundamentals,true,2019-04-15,2024-04-15,https://certs.company.com/mike-cloud-2019
+mike@company.com,production_access_training,Production Access Certification,true,2019-05-01,2024-05-01,https://certs.company.com/mike-prod-2019
+nina@company.com,security_training,Security Training,true,2023-05-01,2026-05-01,https://certs.company.com/nina-security-2023
+nina@company.com,cloud_security_training,Cloud Security Fundamentals,true,2023-06-15,2026-06-15,https://certs.company.com/nina-cloud-2023
+nina@company.com,monitoring_training,Monitoring and Alerting Best Practices,true,2023-05-20,null,https://certs.company.com/nina-monitoring-2023
+oscar@company.com,security_training,Security Training,true,2022-10-01,2025-10-01,https://certs.company.com/oscar-security-2022
+oscar@company.com,data_privacy_training,Data Privacy Fundamentals,true,2022-10-15,2025-10-15,https://certs.company.com/oscar-privacy-2022
+emily@company.com,security_training,Security Training,true,2020-12-01,2025-12-01,https://certs.company.com/emily-security-2020
+emily@company.com,data_privacy_training,Data Privacy Fundamentals,true,2020-12-15,2025-12-15,https://certs.company.com/emily-privacy-2020
+paul@company.com,security_training,Security Training,true,2021-07-01,2024-07-01,https://certs.company.com/paul-security-2021
+paul@company.com,data_privacy_training,Data Privacy Fundamentals,true,2021-07-15,2024-07-15,https://certs.company.com/paul-privacy-2021
+quinn@company.com,security_training,Security Training,false,null,null,null
+quinn@company.com,git_training,Git Best Practices,true,2024-03-10,null,https://certs.company.com/quinn-git-2024
+rachel@company.com,security_training,Security Training,true,2023-10-01,2026-10-01,https://certs.company.com/rachel-security-2023
+rachel@company.com,git_training,Git Best Practices,true,2023-09-15,null,https://certs.company.com/rachel-git-2023
+rachel@company.com,code_review_training,Code Review Guidelines,true,2023-09-20,null,https://certs.company.com/rachel-codereview-2023

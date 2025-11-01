@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #3b82f6;
+  --accent: #f3f4f6;
+  --accent-foreground: #171717;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #171717;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --popover: #262626;
+    --popover-foreground: #ededed;
+    --border: #404040;
+    --input: #404040;
+    --ring: #3b82f6;
+    --accent: #262626;
+    --accent-foreground: #ededed;
+    --muted: #171717;
+    --muted-foreground: #a3a3a3;
+    --card: #0a0a0a;
+    --card-foreground: #ededed;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #262626;
+    --secondary-foreground: #ededed;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure dropdowns appear above all other content */
+[data-radix-select-content] {
+  z-index: 9999 !important;
+}
+
+/* Syntax highlighting styles */
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #6c757d;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section {
+  color: #198754;
+}
+
+.hljs-function,
+.hljs-class .hljs-title {
+  color: #6f42c1;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #e83e8c;
+}
+
+.hljs-number,
+.hljs-meta {
+  color: #fd7e14;
+}
+
+.hljs-attr,
+.hljs-attribute {
+  color: #20c997;
+}
+
+/* Markdown prose styles */
+.prose {
+  max-width: none;
+}
+
+.prose-sm {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}

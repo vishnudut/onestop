@@ -1,0 +1,11 @@
+ip_address,user_email,location,added_date,added_by,status,expires_at,reason
+203.0.113.45,alice@company.com,Home Office,2024-01-15,auto,active,null,VPN access
+198.51.100.23,charlie@company.com,Coworking Space,2024-06-10,auto,active,2024-12-10,Temporary workspace
+192.0.2.100,diana@company.com,Home Office,2023-09-15,auto,active,null,VPN access
+192.0.2.101,diana@company.com,Traveling,2024-10-20,diana@company.com,active,2024-11-20,Business trip
+198.51.100.50,frank@company.com,Home Office,2022-08-22,auto,active,null,VPN access
+203.0.113.88,lisa@company.com,Home Office,2021-12-01,auto,active,null,VPN access
+192.0.2.150,mike@company.com,Home Office,2019-02-15,auto,active,null,VPN access
+198.51.100.75,ivan@company.com,Home Office,2022-12-02,auto,active,null,VPN access
+203.0.113.99,grace@company.com,Cafe,2024-09-15,auto,active,2024-12-15,Temporary location
+136.25.15.73,alice@company.com,Unknown,2025-11-01T21:02:28.959Z,auto,active,null,To get access to backend API.

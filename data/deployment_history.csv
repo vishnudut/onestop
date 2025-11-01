@@ -1,0 +1,11 @@
+deployment_id,service_name,environment,version,deployed_by,deployed_at,status,rollback_available
+DEP-001,user-service,production,v2.3.1,alice@company.com,2024-10-30T14:30:00,success,true
+DEP-002,payment-service,staging,v1.8.0-rc1,frank@company.com,2024-10-31T09:15:00,success,true
+DEP-003,frontend-web,production,v3.2.0,grace@company.com,2024-10-29T16:00:00,failed,true
+DEP-004,analytics-pipeline,production,v1.5.2,oscar@company.com,2024-10-28T11:00:00,success,true
+DEP-005,mobile-app,production,v4.1.3,ivan@company.com,2024-10-27T13:45:00,success,true
+DEP-006,api-gateway,production,v2.1.0,diana@company.com,2024-10-30T10:20:00,success,true
+DEP-007,notification-service,staging,v1.9.2-rc3,frank@company.com,2024-10-31T08:30:00,success,true
+DEP-008,search-service,production,v3.0.1,alice@company.com,2024-10-29T15:15:00,success,true
+DEP-009,user-service,staging,v2.4.0-rc1,alice@company.com,2024-10-31T11:00:00,in_progress,true
+DEP-010,frontend-web,staging,v3.2.1-rc1,charlie@company.com,2024-10-31T10:45:00,success,true

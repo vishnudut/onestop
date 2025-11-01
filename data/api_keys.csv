@@ -1,0 +1,13 @@
+key_id,service,environment,user_email,created_date,expires_at,last_used,status,project,approval_ticket
+KEY-001,openai,production,alice@company.com,2023-06-15,2024-12-15,2024-10-30,active,chatbot-v2,JIRA-1234
+KEY-002,stripe,test,alice@company.com,2023-03-10,null,2024-10-29,active,payment-flow,auto
+KEY-003,aws,dev,alice@company.com,2023-02-01,null,2024-10-31,active,backend-services,auto
+KEY-004,datadog,production,bob@company.com,2022-05-20,null,2024-10-31,active,monitoring,auto
+KEY-005,twilio,test,charlie@company.com,2024-07-10,2025-07-10,2024-10-15,active,sms-notifications,JIRA-2345
+KEY-006,github,production,diana@company.com,2021-09-12,null,2024-10-31,active,ci-cd-pipeline,auto
+KEY-007,openai,test,eve@company.com,2024-09-01,2024-12-01,never,suspended,intern-project,JIRA-3456
+KEY-008,stripe,production,frank@company.com,2023-01-20,null,2024-10-30,active,payment-system,JIRA-4567
+KEY-009,aws,production,lisa@company.com,2021-12-01,null,2024-10-31,active,infrastructure,auto
+KEY-010,sendgrid,production,frank@company.com,2023-02-15,null,2024-10-28,active,email-service,JIRA-5678
+KEY-011,datadog,production,lisa@company.com,2021-12-05,null,2024-10-31,active,monitoring,auto
+KEY-012,openai,test,charlie@company.com,2024-08-20,2025-08-20,2024-10-25,active,ai-features,auto

@@ -1,0 +1,10 @@
+request_id,requester_email,resource_type,resource_name,reason,approver_email,status,created_at,resolved_at,ticket_id
+REQ-001,charlie@company.com,database,production_db,Debug customer issue,bob@company.com,pending,2024-10-31T10:30:00,null,null
+REQ-002,alice@company.com,api_key,openai,New chatbot feature,grace@company.com,approved,2024-10-28T14:00:00,2024-10-28T15:30:00,JIRA-1234
+REQ-003,eve@company.com,github,backend_team_org,Contributing to backend,bob@company.com,rejected,2024-10-25T09:00:00,2024-10-25T11:00:00,null
+REQ-004,diana@company.com,network,vpn_whitelist,Traveling for conference,auto,approved,2024-10-20T08:00:00,2024-10-20T08:01:00,null
+REQ-005,quinn@company.com,api_key,aws,New microservice development,mike@company.com,pending,2024-10-30T16:20:00,null,JIRA-6789
+REQ-006,henry@company.com,tool,pagerduty,Joining on-call rotation,bob@company.com,approved,2024-10-29T11:15:00,2024-10-29T14:30:00,null
+REQ-007,julia@company.com,database,production_db,Performance analysis,bob@company.com,pending,2024-10-31T09:45:00,null,null
+REQ-1762031712154,alice@company.com,database,production_db,testing in production,bob@company.com,pending,2025-11-01T21:15:12.154Z,null,null
+REQ-1762035107327,alice@company.com,api_key,openai,Need to stress test an API before deployment.,bob@company.com,pending,2025-11-01T22:11:47.327Z,null,SDE-8550

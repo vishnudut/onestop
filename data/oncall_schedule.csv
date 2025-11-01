@@ -1,0 +1,11 @@
+week_start,team,primary_oncall_email,secondary_oncall_email,escalation_email
+2024-10-28,Backend,alice@company.com,frank@company.com,bob@company.com
+2024-10-28,Frontend,grace@company.com,charlie@company.com,sarah@company.com
+2024-10-28,Platform,diana@company.com,henry@company.com,bob@company.com
+2024-10-28,Infrastructure,lisa@company.com,nina@company.com,mike@company.com
+2024-10-28,Data,oscar@company.com,paul@company.com,emily@company.com
+2024-11-04,Backend,frank@company.com,julia@company.com,bob@company.com
+2024-11-04,Frontend,charlie@company.com,rachel@company.com,sarah@company.com
+2024-11-04,Platform,henry@company.com,diana@company.com,bob@company.com
+2024-11-04,Infrastructure,nina@company.com,lisa@company.com,mike@company.com
+2024-11-04,Data,paul@company.com,oscar@company.com,emily@company.com

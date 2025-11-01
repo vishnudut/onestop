@@ -1,0 +1,11 @@
+license_id,software,type,user_email,purchased_date,expires_at,seats_total,seats_used,status
+LIC-001,IntelliJ IDEA Ultimate,team,null,2023-06-01,2025-06-01,50,42,active
+LIC-002,Docker Desktop,team,null,2023-01-15,2025-01-15,100,87,active
+LIC-003,Postman Pro,team,null,2024-03-01,2025-03-01,25,18,active
+LIC-004,Figma Professional,team,null,2023-09-01,2024-09-01,30,28,expired
+LIC-005,GitHub Enterprise,organization,null,2022-01-01,2025-01-01,200,156,active
+LIC-006,Datadog Pro,team,null,2023-05-15,2025-05-15,75,62,active
+LIC-007,Slack Business,organization,null,2022-06-01,2025-06-01,500,412,active
+LIC-008,Jira Software,organization,null,2022-01-01,2025-01-01,200,178,active
+LIC-009,VS Code Extensions,team,null,2024-01-10,2025-01-10,100,73,active
+LIC-010,AWS Support,organization,null,2023-01-01,2025-01-01,unlimited,unlimited,active

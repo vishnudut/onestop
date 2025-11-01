@@ -1,0 +1,13 @@
+resource_type,resource_name,required_training,training_name,training_url,description
+database,production_db,security_training;data_privacy_training,Security Training for Database Access;Data Privacy Fundamentals,https://training.company.com/security-db;https://training.company.com/data-privacy,Required for production database access
+database,staging_db,security_training,Security Training for Database Access,https://training.company.com/security-db,Required for staging database access
+github,backend_team_org,git_training;code_review_training,Git Best Practices;Code Review Guidelines,https://training.company.com/git-basics;https://training.company.com/code-review,Required for backend team repository access
+github,frontend_team_org,git_training;code_review_training,Git Best Practices;Code Review Guidelines,https://training.company.com/git-basics;https://training.company.com/code-review,Required for frontend team repository access
+api_key,openai,security_training;ai_ethics_training,Security Training;AI Ethics and Responsible Use,https://training.company.com/security-101;https://training.company.com/ai-ethics,Required for OpenAI API key access
+api_key,stripe,security_training;payment_compliance_training,Security Training;Payment Processing Compliance,https://training.company.com/security-101;https://training.company.com/payment-compliance,Required for Stripe API access
+api_key,aws,security_training;cloud_security_training,Security Training;Cloud Security Fundamentals,https://training.company.com/security-101;https://training.company.com/cloud-security,Required for AWS API access
+network,vpn_whitelist,security_training,Security Training,https://training.company.com/security-101,Required for VPN access
+tool,pagerduty,oncall_training,On-Call Best Practices,https://training.company.com/oncall-training,Required for on-call tool access
+tool,datadog,monitoring_training,Monitoring and Alerting Best Practices,https://training.company.com/monitoring,Required for monitoring tool access
+cloud,aws_dev,security_training;cloud_security_training,Security Training;Cloud Security Fundamentals,https://training.company.com/security-101;https://training.company.com/cloud-security,Required for AWS development environment
+cloud,aws_prod,security_training;cloud_security_training;production_access_training,Security Training;Cloud Security Fundamentals;Production Access Certification,https://training.company.com/security-101;https://training.company.com/cloud-security;https://training.company.com/prod-access,Required for AWS production environment
