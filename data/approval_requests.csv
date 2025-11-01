@@ -8,3 +8,5 @@ REQ-006,henry@company.com,tool,pagerduty,Joining on-call rotation,bob@company.co
 REQ-007,julia@company.com,database,production_db,Performance analysis,bob@company.com,pending,2024-10-31T09:45:00,null,null
 REQ-1762031712154,alice@company.com,database,production_db,testing in production,bob@company.com,pending,2025-11-01T21:15:12.154Z,null,null
 REQ-1762035107327,alice@company.com,api_key,openai,Need to stress test an API before deployment.,bob@company.com,pending,2025-11-01T22:11:47.327Z,null,SDE-8550
+REQ-1762036395496,alice@company.com,github,backend_team_org,To test a new feature.,bob@company.com,pending,2025-11-01T22:33:15.496Z,null,null
+REQ-1762037278527,alice@company.com,api_key,openai,Needed for developing AI features.,bob@company.com,pending,2025-11-01T22:47:58.527Z,null,SDE-8052

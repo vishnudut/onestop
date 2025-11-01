@@ -29,6 +29,7 @@ import {
 	getUserAllTrainingStatus,
 	hasSecurityTraining,
 } from "@/lib/tools/training";
+import { auditLogger, auditHelpers, AuditSeverity, AuditEventType } from "@/lib/audit-logger";
 
 export const maxDuration = 30;
 
@@ -36,10 +37,36 @@ export async function POST(req: Request) {
 	const { messages, userEmail }: { messages: UIMessage[]; userEmail?: string } =
 		await req.json();
 
-	const result = streamText({
-		model: openai("gpt-4o-mini"),
-		messages: convertToModelMessages(messages),
-		stopWhen: stepCountIs(5), // Allow up to 5 steps for tool calls and responses
+	// Extract request metadata for audit logging
+	const requestId = `REQ-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+	const ipAddress = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+	const userAgent = req.headers.get('user-agent') || 'unknown';
+
+	// Log the chat request
+	await auditLogger.logEvent({
+		event_type: AuditEventType.SYSTEM_ACCESS,
+		severity: AuditSeverity.LOW,
+		user_email: userEmail || 'anonymous',
+		action: 'chat_request_initiated',
+		description: `Chat request initiated with ${messages.length} messages`,
+		ip_address: ipAddress,
+		user_agent: userAgent,
+		request_id: requestId,
+		metadata: {
+			message_count: messages.length,
+			last_message: messages[messages.length - 1]?.parts?.[0]?.text?.substring(0, 100) || 'no_text',
+			request_method: 'POST',
+			endpoint: '/api/chat'
+		}
+	});
+
+	const startTime = Date.now();
+
+	try {
+		const result = streamText({
+			model: openai("gpt-4o-mini"),
+			messages: convertToModelMessages(messages),
+			stopWhen: stepCountIs(5), // Allow up to 5 steps for tool calls and responses
 		system: `You are a helpful IT support agent for software engineers at a tech company.
 Your role is to help developers with:
 - Checking their current access permissions
@@ -90,7 +117,7 @@ MANDATORY UI GENERATION RULES:
 2. When they request access to resources, FIRST check training with checkUserTrainingStatus, THEN generateAccessRequestUI with uiType="access_request_form"
 3. When users ask "Can you check if I have raised a request", FIRST use getUserRequestHistory, THEN generateAccessRequestUI with uiType="request_status_dashboard"
 4. When showing training status, use generateAccessRequestUI with uiType="training_status_card"
-5. When they need to whitelist an IP, FIRST check their access AND training, THEN get their current IP
+5. When they need to whitelist an IP, use the whitelistUserIP tool which handles validation automatically
 6. When creating API keys, FIRST verify permissions AND training, THEN ask for environment and project details
 
 ALWAYS GENERATE UI COMPONENTS FOR THESE SCENARIOS:
@@ -102,6 +129,12 @@ ALWAYS GENERATE UI COMPONENTS FOR THESE SCENARIOS:
 CRITICAL: You MUST respond with text after every tool call. Never end your response with just a tool call result.
 After calling any tool and receiving its result, you MUST analyze the result and provide a clear, friendly,
 human-readable summary explaining the information to the user. Do not just call the tool - always follow up with text.
+
+TRAINING VALIDATION RULES:
+- If checkUserTrainingStatus returns hasRequiredTraining: true, the user CAN proceed
+- If training shows completed: true and expired: false, the training is VALID
+- Only reject for training if the training is actually missing or expired
+- Do not reject users who have valid, non-expired training
 
 SPECIAL RULE FOR UI COMPONENTS:
 When you use generateAccessRequestUI, ALWAYS follow up with explanatory text that describes what the user can do with the interface.
@@ -122,9 +155,41 @@ Use emojis occasionally to make responses friendly: ✅ ❌ 🔑 🔒 📋 🚀`
 				execute: async ({ userEmail: toolUserEmail }) => {
 					const emailToUse = toolUserEmail || userEmail;
 					if (!emailToUse) {
+						await auditLogger.logSecurityEvent(
+							'unknown',
+							'missing_user_email',
+							'Tool execution attempted without user email',
+							AuditSeverity.MEDIUM
+						);
 						throw new Error("User email is required");
 					}
-					return await checkUserAccess(emailToUse);
+
+					const toolStartTime = Date.now();
+					try {
+						const result = await checkUserAccess(emailToUse);
+						const executionTime = Date.now() - toolStartTime;
+
+						await auditHelpers.logToolExecution(
+							emailToUse,
+							'checkUserAccess',
+							{ userEmail: emailToUse },
+							'SUCCESS',
+							executionTime
+						);
+
+						return result;
+					} catch (error) {
+						const executionTime = Date.now() - toolStartTime;
+						await auditHelpers.logToolExecution(
+							emailToUse,
+							'checkUserAccess',
+							{ userEmail: emailToUse },
+							'FAILURE',
+							executionTime,
+							error.message
+						);
+						throw error;
+					}
 				},
 			}),
 
@@ -157,14 +222,46 @@ Use emojis occasionally to make responses friendly: ✅ ❌ 🔑 🔒 📋 🚀`
 				}) => {
 					const emailToUse = toolUserEmail || userEmail;
 					if (!emailToUse) {
+						await auditLogger.logSecurityEvent(
+							'unknown',
+							'missing_user_email',
+							'Access request attempted without user email',
+							AuditSeverity.HIGH
+						);
 						throw new Error("User email is required");
 					}
-					return await requestAccess(
-						emailToUse,
-						resourceType,
-						resourceName,
-						reason,
-					);
+
+					const toolStartTime = Date.now();
+					try {
+						const result = await requestAccess(
+							emailToUse,
+							resourceType,
+							resourceName,
+							reason,
+						);
+						const executionTime = Date.now() - toolStartTime;
+
+						await auditHelpers.logToolExecution(
+							emailToUse,
+							'requestAccess',
+							{ resourceType, resourceName, reason },
+							result.success ? 'SUCCESS' : 'FAILURE',
+							executionTime
+						);
+
+						return result;
+					} catch (error) {
+						const executionTime = Date.now() - toolStartTime;
+						await auditHelpers.logToolExecution(
+							emailToUse,
+							'requestAccess',
+							{ resourceType, resourceName, reason },
+							'FAILURE',
+							executionTime,
+							error.message
+						);
+						throw error;
+					}
 				},
 			}),
 
@@ -172,8 +269,32 @@ Use emojis occasionally to make responses friendly: ✅ ❌ 🔑 🔒 📋 🚀`
 				description: "Get the user current public IP address",
 				inputSchema: z.object({}),
 				execute: async () => {
-					const ip = await getCurrentIP();
-					return { ip };
+					const toolStartTime = Date.now();
+					try {
+						const ip = await getCurrentIP();
+						const executionTime = Date.now() - toolStartTime;
+
+						await auditHelpers.logToolExecution(
+							userEmail || 'system',
+							'getCurrentIP',
+							{},
+							'SUCCESS',
+							executionTime
+						);
+
+						return { ip };
+					} catch (error) {
+						const executionTime = Date.now() - toolStartTime;
+						await auditHelpers.logToolExecution(
+							userEmail || 'system',
+							'getCurrentIP',
+							{},
+							'FAILURE',
+							executionTime,
+							error.message
+						);
+						throw error;
+					}
 				},
 			}),
 
@@ -478,8 +599,129 @@ Use emojis occasionally to make responses friendly: ✅ ❌ 🔑 🔒 📋 🚀`
 					}
 				},
 			}),
+
+			whitelistUserIP: tool({
+				description: "Whitelist user's current IP address for VPN access with proper training validation",
+				inputSchema: z.object({
+					userEmail: z
+						.string()
+						.email()
+						.describe("User email address")
+						.default(userEmail || ""),
+					reason: z
+						.string()
+						.describe("Reason for IP whitelisting (e.g., working from home, traveling)")
+						.default("VPN access requested"),
+				}),
+				execute: async ({ userEmail: toolUserEmail, reason }) => {
+					const emailToUse = toolUserEmail || userEmail;
+					if (!emailToUse) {
+						throw new Error("User email is required");
+					}
+
+					// First check if user has valid security training
+					const hasValidTraining = await hasSecurityTraining(emailToUse);
+
+					if (!hasValidTraining) {
+						await auditLogger.logSecurityEvent(
+							emailToUse,
+							'ip_whitelist_denied_training',
+							`IP whitelist denied - security training not valid`,
+							AuditSeverity.MEDIUM
+						);
+
+						return {
+							success: false,
+							error: "Security training required",
+							requiresTraining: true,
+							trainingUrl: "https://training.company.com/security-101"
+						};
+					}
+
+					// Get current IP
+					const currentIP = await getCurrentIP();
+
+					// Proceed with whitelisting
+					const result = await whitelistIP(emailToUse, currentIP, reason);
+
+					return {
+						...result,
+						currentIP,
+						trainingValid: true
+					};
+				},
+			}),
 		},
+		onFinish: async (finishResult) => {
+			const totalTime = Date.now() - startTime;
+
+			// Log successful completion
+			await auditLogger.logEvent({
+				event_type: AuditEventType.SYSTEM_ACCESS,
+				severity: AuditSeverity.LOW,
+				user_email: userEmail || 'anonymous',
+				action: 'chat_request_completed',
+				action_result: 'SUCCESS',
+				description: `Chat request completed successfully in ${totalTime}ms`,
+				ip_address: ipAddress,
+				user_agent: userAgent,
+				request_id: requestId,
+				metadata: {
+					execution_time_ms: totalTime,
+					token_usage: finishResult.usage,
+					finish_reason: finishResult.finishReason,
+					response_length: finishResult.text?.length || 0
+				}
+			});
+		},
+		onError: async (error) => {
+			const totalTime = Date.now() - startTime;
+
+			// Log error
+			await auditLogger.logEvent({
+				event_type: AuditEventType.SYSTEM_ACCESS,
+				severity: AuditSeverity.HIGH,
+				user_email: userEmail || 'anonymous',
+				action: 'chat_request_failed',
+				action_result: 'FAILURE',
+				description: `Chat request failed: ${error.message}`,
+				ip_address: ipAddress,
+				user_agent: userAgent,
+				request_id: requestId,
+				metadata: {
+					execution_time_ms: totalTime,
+					error_type: error.name,
+					error_message: error.message,
+					error_stack: error.stack
+				}
+			});
+		}
 	});
 
 	return result.toUIMessageStreamResponse();
+
+	} catch (error) {
+		const totalTime = Date.now() - startTime;
+
+		// Log catastrophic failure
+		await auditLogger.logEvent({
+			event_type: AuditEventType.SYSTEM_ACCESS,
+			severity: AuditSeverity.CRITICAL,
+			user_email: userEmail || 'anonymous',
+			action: 'chat_request_exception',
+			action_result: 'FAILURE',
+			description: `Chat request threw exception: ${error.message}`,
+			ip_address: ipAddress,
+			user_agent: userAgent,
+			request_id: requestId,
+			metadata: {
+				execution_time_ms: totalTime,
+				error_type: error.name,
+				error_message: error.message,
+				error_stack: error.stack
+			}
+		});
+
+		throw error;
+	}
 }

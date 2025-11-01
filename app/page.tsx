@@ -25,6 +25,7 @@ import {
 	ChevronDownIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { clientAuditLogger, auditHelpers, AuditSeverity } from "@/lib/audit-client";
 
 // Demo users with different access levels
 const DEMO_USERS = [
@@ -131,9 +132,21 @@ export default function Home() {
 
 	const scrollToBottomFn = useScrollToBottom();
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!input.trim() || isLoading) return;
+
+		// Log the message submission
+		await clientAuditLogger.logEvent({
+			user_email: userEmail,
+			action: "chat_message_sent",
+			description: `User sent chat message: ${input.substring(0, 100)}${input.length > 100 ? '...' : ''}`,
+			metadata: {
+				message_length: input.length,
+				message_preview: input.substring(0, 200),
+				input_method: "text_input"
+			}
+		});
 
 		sendMessage(
 			{ text: input },
@@ -146,7 +159,19 @@ export default function Home() {
 		setInput("");
 	};
 
-	const handleSuggestionClick = (query: string) => {
+	const handleSuggestionClick = async (query: string) => {
+		// Log suggested query usage
+		await clientAuditLogger.logEvent({
+			user_email: userEmail,
+			action: "suggested_query_clicked",
+			description: `User clicked suggested query: ${query}`,
+			metadata: {
+				suggestion_text: query,
+				input_method: "suggestion_button",
+				ui_component: "suggested_queries"
+			}
+		});
+
 		sendMessage(
 			{ text: query },
 			{
@@ -158,10 +183,23 @@ export default function Home() {
 	};
 
 	const handleUIAction = async (action: string, data: any) => {
-		console.log("UI Action:", action, data);
+		// Log all UI interactions
+		await auditHelpers.logUIAction(userEmail, action, "performed", data);
 
 		switch (action) {
 			case "submit_access_request":
+				// Log the form submission specifically
+				await clientAuditLogger.logEvent({
+					user_email: userEmail,
+					action: "access_request_form_submitted",
+					description: `User submitted access request form for ${data.resourceType}:${data.resourceName}`,
+					metadata: {
+						form_data: data,
+						ui_component: "access_request_form"
+					},
+					compliance_tags: ["form_submission", "access_request"]
+				});
+
 				// Send a message to the AI that a request was submitted
 				sendMessage(
 					{
@@ -175,6 +213,16 @@ export default function Home() {
 				);
 				break;
 			case "bump_request":
+				await clientAuditLogger.logEvent({
+					user_email: userEmail,
+					action: "request_bump_initiated",
+					description: `User requested to bump pending request ${data.requestId}`,
+					metadata: {
+						request_id: data.requestId,
+						ui_component: "request_status_dashboard"
+					}
+				});
+
 				sendMessage(
 					{
 						text: `Please send a reminder about my pending request: ${data.requestId}`,
@@ -187,6 +235,16 @@ export default function Home() {
 				);
 				break;
 			case "cancel_request":
+				await clientAuditLogger.logEvent({
+					user_email: userEmail,
+					action: "request_cancellation_initiated",
+					description: `User requested to cancel request ${data.requestId}`,
+					metadata: {
+						request_id: data.requestId,
+						ui_component: "request_status_dashboard"
+					}
+				});
+
 				sendMessage(
 					{ text: `I want to cancel my request: ${data.requestId}` },
 					{
@@ -197,6 +255,16 @@ export default function Home() {
 				);
 				break;
 			case "duplicate_request":
+				await clientAuditLogger.logEvent({
+					user_email: userEmail,
+					action: "request_duplication_initiated",
+					description: `User requested to duplicate access request for ${data.request.resource_name}`,
+					metadata: {
+						original_request: data.request,
+						ui_component: "request_status_dashboard"
+					}
+				});
+
 				sendMessage(
 					{
 						text: `I want to submit a similar request to: ${data.request.resource_name}`,
@@ -209,7 +277,15 @@ export default function Home() {
 				);
 				break;
 			default:
-				console.log("Unhandled UI action:", action, data);
+				await clientAuditLogger.logEvent({
+					user_email: userEmail,
+					action: "unhandled_ui_action",
+					description: `Unhandled UI action: ${action}`,
+					metadata: {
+						action_type: action,
+						action_data: data
+					}
+				});
 		}
 	};
 
@@ -242,7 +318,20 @@ export default function Home() {
 							</p>
 							<p className="text-xs text-gray-500">{selectedUser?.role}</p>
 						</div>
-						<Select value={userEmail} onValueChange={setUserEmail}>
+						<Select value={userEmail} onValueChange={async (newEmail) => {
+							// Log user switching
+							await clientAuditLogger.logEvent({
+								user_email: userEmail,
+								action: "user_role_switched",
+								description: `User switched from ${userEmail} to ${newEmail}`,
+								metadata: {
+									previous_user: userEmail,
+									new_user: newEmail,
+									ui_component: "user_selector"
+								}
+							});
+							setUserEmail(newEmail);
+						}}>
 							<SelectTrigger className="w-auto gap-2 border border-gray-300 bg-white hover:bg-gray-50 shadow-sm">
 								<Avatar className="size-6">
 									<AvatarFallback className="text-xs bg-gray-100 text-gray-700">

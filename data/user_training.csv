@@ -1,9 +1,14 @@
 user_email,training_id,training_name,completed,completed_date,expires_at,certificate_url
-alice@company.com,security_training,Security Training,true,2022-04-15,2025-04-15,https://certs.company.com/alice-security-2022
-alice@company.com,data_privacy_training,Data Privacy Fundamentals,true,2022-05-20,2025-05-20,https://certs.company.com/alice-privacy-2022
-alice@company.com,git_training,Git Best Practices,true,2022-03-20,null,https://certs.company.com/alice-git-2022
-alice@company.com,code_review_training,Code Review Guidelines,true,2022-03-25,null,https://certs.company.com/alice-codereview-2022
-alice@company.com,ai_ethics_training,AI Ethics and Responsible Use,true,2023-08-10,null,https://certs.company.com/alice-ai-ethics-2023
+alice@company.com,security_training,Security Training,true,2024-01-15,2027-01-15,https://certs.company.com/alice-security-2024
+alice@company.com,data_privacy_training,Data Privacy Fundamentals,true,2024-01-20,2027-01-20,https://certs.company.com/alice-privacy-2024
+alice@company.com,git_training,Git Best Practices,true,2024-01-10,null,https://certs.company.com/alice-git-2024
+alice@company.com,code_review_training,Code Review Guidelines,true,2024-01-12,null,https://certs.company.com/alice-codereview-2024
+alice@company.com,ai_ethics_training,AI Ethics and Responsible Use,true,2024-01-25,null,https://certs.company.com/alice-ai-ethics-2024
+alice@company.com,cloud_security_training,Cloud Security Fundamentals,true,2024-02-01,2027-02-01,https://certs.company.com/alice-cloud-2024
+alice@company.com,production_access_training,Production Access Certification,true,2024-02-05,2027-02-05,https://certs.company.com/alice-prod-2024
+alice@company.com,payment_compliance_training,Payment Processing Compliance,true,2024-02-10,2027-02-10,https://certs.company.com/alice-payment-2024
+alice@company.com,oncall_training,On-Call Best Practices,true,2024-02-15,null,https://certs.company.com/alice-oncall-2024
+alice@company.com,monitoring_training,Monitoring and Alerting Best Practices,true,2024-02-20,null,https://certs.company.com/alice-monitoring-2024
 bob@company.com,security_training,Security Training,true,2020-02-15,2025-02-15,https://certs.company.com/bob-security-2020
 bob@company.com,data_privacy_training,Data Privacy Fundamentals,true,2020-03-10,2025-03-10,https://certs.company.com/bob-privacy-2020
 bob@company.com,git_training,Git Best Practices,true,2020-01-20,null,https://certs.company.com/bob-git-2020

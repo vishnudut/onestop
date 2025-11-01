@@ -1,5 +1,6 @@
 import { readCSV, appendToCSV, findInCSV, findOneInCSV } from "../csv-helper";
 import { sendSlackDM } from "../mock-apis/slack";
+import { auditLogger, auditHelpers, AuditSeverity } from "../audit-logger";
 
 export interface UserAccess {
 	user_email: string;
@@ -29,10 +30,29 @@ export interface AccessPolicy {
 export async function checkUserAccess(
 	userEmail: string,
 ): Promise<UserAccess[]> {
+	// Log the access check
+	await auditHelpers.logToolExecution(
+		userEmail,
+		"checkUserAccess",
+		{ userEmail },
+		"SUCCESS"
+	);
+
 	const access = await findInCSV(
 		"user_access.csv",
 		(row) => row.user_email === userEmail && row.status === "active",
 	);
+
+	// Log what access was returned
+	await auditLogger.logEvent({
+		user_email: userEmail,
+		action: "access_check_completed",
+		description: `User access check returned ${access.length} active permissions`,
+		metadata: {
+			access_count: access.length,
+			resources: access.map(a => `${a.resource_type}:${a.resource_name}`).join(',')
+		}
+	});
 
 	return access as UserAccess[];
 }
@@ -46,6 +66,15 @@ export async function requestAccess(
 	resourceName: string,
 	reason: string,
 ): Promise<any> {
+	// Log the access request attempt
+	await auditLogger.logAccessRequest(
+		userEmail,
+		resourceType,
+		resourceName,
+		reason,
+		"PENDING"
+	);
+
 	// Get the policy for this resource
 	const policy = await findOneInCSV(
 		"access_policies.csv",
@@ -54,6 +83,13 @@ export async function requestAccess(
 	);
 
 	if (!policy) {
+		await auditLogger.logAccessRequest(
+			userEmail,
+			resourceType,
+			resourceName,
+			reason,
+			"FAILURE"
+		);
 		return {
 			success: false,
 			error: `No policy found for ${resourceType}:${resourceName}`,
@@ -67,6 +103,13 @@ export async function requestAccess(
 	);
 
 	if (!user) {
+		await auditLogger.logAccessRequest(
+			userEmail,
+			resourceType,
+			resourceName,
+			reason,
+			"FAILURE"
+		);
 		return {
 			success: false,
 			error: "User not found",
@@ -97,6 +140,17 @@ export async function requestAccess(
 				`Resource: ${resourceName} (${resourceType})\n` +
 				`Reason: ${reason}\n\n` +
 				`Please approve or reject this request.`,
+		);
+
+		// Log the approval request
+		await auditLogger.logApproval(
+			requestId,
+			userEmail,
+			user.manager_email,
+			"REQUESTED",
+			resourceType,
+			resourceName,
+			reason
 		);
 
 		return {
@@ -130,6 +184,13 @@ export async function requestAccess(
 		}
 
 		if (!canAutoApprove) {
+			await auditLogger.logAccessRequest(
+				userEmail,
+				resourceType,
+				resourceName,
+				reason,
+				"FAILURE"
+			);
 			return {
 				success: false,
 				error: `Auto-approval conditions not met. Required: ${conditions}`,
@@ -147,6 +208,30 @@ export async function requestAccess(
 			expires_at: "null",
 			status: "active",
 		});
+
+		// Log successful auto-approval
+		await auditLogger.logEvent({
+			user_email: userEmail,
+			resource_type: resourceType,
+			resource_name: resourceName,
+			action: "access_auto_approved",
+			action_result: "SUCCESS",
+			description: `Access auto-approved for ${resourceType}:${resourceName}`,
+			metadata: {
+				approval_conditions: conditions,
+				access_level: "read_only",
+				granted_by: "auto"
+			},
+			compliance_tags: ["auto_approval", "access_granted"]
+		});
+
+		await auditLogger.logAccessRequest(
+			userEmail,
+			resourceType,
+			resourceName,
+			reason,
+			"SUCCESS"
+		);
 
 		return {
 			success: true,
@@ -263,6 +348,14 @@ export async function getUserRequestHistory(userEmail: string): Promise<{
 	rejected: any[];
 	total: number;
 }> {
+	// Log the request history access
+	await auditHelpers.logToolExecution(
+		userEmail,
+		"getUserRequestHistory",
+		{ userEmail },
+		"SUCCESS"
+	);
+
 	const allRequests = await findInCSV(
 		"approval_requests.csv",
 		(row) => row.requester_email === userEmail,
@@ -275,6 +368,19 @@ export async function getUserRequestHistory(userEmail: string): Promise<{
 	// Sort by created date (newest first)
 	const sortByDate = (a: any, b: any) =>
 		new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+
+	// Log the summary of what was retrieved
+	await auditLogger.logEvent({
+		user_email: userEmail,
+		action: "request_history_retrieved",
+		description: `Request history retrieved: ${pending.length} pending, ${approved.length} approved, ${rejected.length} rejected`,
+		metadata: {
+			total_requests: allRequests.length,
+			pending_count: pending.length,
+			approved_count: approved.length,
+			rejected_count: rejected.length
+		}
+	});
 
 	return {
 		pending: pending.sort(sortByDate),
